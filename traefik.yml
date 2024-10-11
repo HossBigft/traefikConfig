@@ -5,12 +5,12 @@ api:
 entryPoints:
   web:
     address: ":80"
-  # Optional if you want to redirect all HTTP to HTTPS
-  #  http:
-  #    redirections:
-  #      entryPoint:
-  #        to: websecure
-  #        scheme: https
+
+    http:
+     redirections:
+       entryPoint:
+         to: websecure
+         scheme: https
   websecure:
     address: ":443"
 serversTransport:
@@ -24,7 +24,7 @@ certificatesResolvers:
   letencrypt:
     acme:
       email: m.glushchenko@office.hoster.kz
-      storage: /certs/acme.json
+      storage: /letsencrypt/acme.json
       caServer: https://acme-staging-v02.api.letsencrypt.org/directory # staging
       httpChallenge:
         entryPoint: web
