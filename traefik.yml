@@ -5,7 +5,6 @@ api:
 entryPoints:
   web:
     address: ":80"
-
     http:
      redirections:
        entryPoint:
@@ -21,12 +20,10 @@ providers:
     exposedByDefault: false
     network: proxy # Optional; Only use the "proxy" Docker network, even if containers are on multiple networks.
 certificatesResolvers:
-  letencrypt:
+  letsencrypt:
     acme:
       email: m.glushchenko@office.hoster.kz
-      storage: /letsencrypt/acme.json
-      caServer: https://acme-staging-v02.api.letsencrypt.org/directory # staging
-      httpChallenge:
-        entryPoint: web
+      storage: letsencrypt/acme.json
+      tlsChallenge: {}
 log:
   filePath: "logs/traefik.log"
