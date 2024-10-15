@@ -28,9 +28,3 @@ certificatesResolvers:
 log:
   filePath: "logs/traefik.log"
 
-http:
-  middlewares:
-    myauth:
-      basicAuth:
-        users:
-          - "troot:$apr1$NIMOtJDh$1rR0EVtlcR7RxzGSNEuXa."
