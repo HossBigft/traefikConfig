@@ -1,16 +1,15 @@
 api:
   dashboard: true # Optional can be disabled
-  insecure: false # Optional can be disabled
-  debug: false # Optional can be Enabled if needed for troubleshooting 
+  debug: true # Optional can be Enabled if needed for troubleshooting 
 entryPoints:
-  web:
+  http:
     address: ":80"
     http:
      redirections:
        entryPoint:
-         to: websecure
+         to: https
          scheme: https
-  websecure:
+  https:
     address: ":443"
 serversTransport:
   insecureSkipVerify: true
@@ -18,13 +17,16 @@ providers:
   docker:
     endpoint: "unix:///var/run/docker.sock"
     exposedByDefault: false
-    network: proxy # Optional; Only use the "proxy" Docker network, even if containers are on multiple networks.
+network: proxy # Optional; Only use the "proxy" Docker network, even if containers are on multiple networks.
 certificatesResolvers:
   letsencrypt:
     acme:
+      caServer: https://acme-staging-v02.api.letsencrypt.org/directory
       email: m.glushchenko@office.hoster.kz
-      storage: letsencrypt/acme.json
+      storage: acme.json
       tlsChallenge: {}
 log:
   filePath: "logs/traefik.log"
+accessLog: 
+  filePath: "logs/access.log"
 

@@ -1,34 +1,28 @@
-
-
 services:
-
   traefik:
-    image: traefik:latest
-    container_name: "traefik"
-    command:
-      - "--log.level=DEBUG"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entryPoints.websecure.address=:443"
+    image: traefik:v3.2
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    environment:
+          - TZ=Asia/Qyzylorda
+    networks:
+      - proxy
     ports:
-      - "443:443"
-      - "6497:8080"
+      - "80:80"  # Expose web entry point
+      - "443:443"  # Expose dashboard
     volumes:
-      - "./letsencrypt:/letsencrypt"
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./logs/:/logs"
-      - "./traefik.yml:/traefik.yml"
-
-      
-      
-
-  whoami:
-    image: "traefik/whoami"
-    container_name: "simple-service"
+      - /var/run/docker.sock:/var/run/docker.sock  
+      - /etc/localtime:/etc/localtime:ro
+      - ./traefik.yml:/traefik.yml:ro
+      - ./acme.json:/acme.json:rw
+      - ./logs/traefik.log:/logs/traefik.log
+      - ./logs/access.log:/logs/access.log
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`d.gruzo.kz`)"
-      - "traefik.http.routers.whoami.tls=true"
-      - "traefik.http.routers.whoami.tls.certresolver=letsencrypt"
-      - "traefik.http.middlewares.test-auth.basicauth.users=troot:$$apr1$$NIMOtJDh$$1rR0EVtlcR7RxzGSNEuXa."
-      - "traefik.http.routers.whoami.middlewares=test-auth"
+      - "traefik.enable=true"  
+      - "treafik.http.routers.traefik.entrypoint=http"
+      - "traefik.http.routers.traefik.rule=Host(`$TRAEFIKHOST`)"
+      - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
+networks:
+  proxy:
+    external: true
