@@ -21,9 +21,10 @@ services:
       - ./logs/access.log:/logs/access.log
     labels:
       - "traefik.enable=true"  
-      - "treafik.http.routers.traefik.entrypoint=http"
-      - "traefik.http.routers.traefik.rule=Host(`$TRAEFIKHOST`)"
+      - "traefik.http.routers.traefik.entrypoints=http"
+      - "traefik.http.routers.api.rule=Host(`$TRAEFIKHOST`)"
+      - "traefik.http.routers.api.service=api@internal"     
       - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
+
 networks:
   proxy:
-    external: true
