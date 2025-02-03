@@ -6,7 +6,7 @@ services:
     security_opt:
       - no-new-privileges:true
     environment:
-          - TZ=Asia/Qyzylorda
+          - TZ=$TIMEZONE
     networks:
       - proxy
     ports:
@@ -21,7 +21,7 @@ services:
       - ./logs/access.log:/logs/access.log
     labels:
       - "traefik.enable=true"  
-      - "traefik.http.routers.traefik.entrypoints=http"
+      - "traefik.http.routers.traefik.entrypoint=http"
       - "traefik.http.routers.api.rule=Host(`$TRAEFIKHOST`)"
       - "traefik.http.routers.api.service=api@internal"     
       - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"

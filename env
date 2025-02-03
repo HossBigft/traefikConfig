@@ -1,4 +1,6 @@
 EMAIL=              
 TRAEFIKLOGIN=                                     
 TRAEFIKPASSHASH=
-TRAEFIKHOST=                               
+TRAEFIKHOST=
+# for correct time in logs   
+TIMEZONE=Asia/Qyzylorda                           
