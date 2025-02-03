@@ -1,6 +1,6 @@
 services:
   traefik:
-    image: traefik:v3.2
+    image: traefik:v3.3
     env_file: ".env"
     restart: unless-stopped
     security_opt:
