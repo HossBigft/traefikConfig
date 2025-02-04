@@ -16,7 +16,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock  
       - /etc/localtime:/etc/localtime:ro
       - ./traefik.yml:/traefik.yml:ro
-      - ./acme.json:/acme.json:rw
+      - ./letsencrypt:/letsencrypt:rw
       - ./logs/traefik.log:/logs/traefik.log
       - ./logs/access.log:/logs/access.log
     labels:
@@ -25,5 +25,6 @@ services:
       - "traefik.http.routers.api.rule=Host(`$TRAEFIKHOST`)"
       - "traefik.http.routers.api.service=api@internal"     
       - "traefik.http.routers.api.tls=true"  
+      - "entrypoints.websecure.http.tls.certresolver=letsencrypt"
 networks:
   proxy:
