@@ -21,9 +21,9 @@ services:
       - ./logs/access.log:/logs/access.log
     labels:
       - "traefik.enable=true"  
-      - "traefik.http.routers.api.entrypoints=web"
+      - "traefik.http.routers.api.entrypoints=websecure"
       - "traefik.http.routers.api.rule=Host(`$TRAEFIKHOST`)"
       - "traefik.http.routers.api.service=api@internal"     
-
+      - "traefik.http.routers.api.tls=true"  
 networks:
   proxy:

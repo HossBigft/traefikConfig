@@ -4,14 +4,13 @@ api:
 entryPoints:
   web:
     address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
   websecure:
     address: ":443"
-http:
-  middlewares:
-    test-redirectscheme:
-      redirectScheme:
-        scheme: https
-        permanent: true
 serversTransport:
   insecureSkipVerify: true
 providers:
