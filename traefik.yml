@@ -24,8 +24,8 @@ network: proxy # Optional; Only use the "proxy" Docker network, even if containe
 certificatesResolvers:
   letsencrypt:
     acme:
-      caServer: https://acme-staging-v02.api.letsencrypt.org/directory # for testing
-      # caServer: https://acme-v02.api.letsencrypt.org/directory
+      # caServer: https://acme-staging-v02.api.letsencrypt.org/directory # for testing
+      caServer: https://acme-v02.api.letsencrypt.org/directory
       email: m.glushchenko@office.hoster.kz
       storage: /letsencrypt/acme.json
       tlsChallenge: {}
